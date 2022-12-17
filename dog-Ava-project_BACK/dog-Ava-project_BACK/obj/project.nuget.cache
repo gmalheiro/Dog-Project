@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "3pF495VEfX3h1nnJQGot01pHHDNwL6GGBLCZ+y+kALRK6vlGj9yfluMYH/gqKzqwphz8S+mIJdE/jUVL5nuNZQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\g.silva.malheiro\\Documents\\Programming\\Projects\\dog-ava-project\\dog-Ava-project_BACK\\dog-Ava-project_BACK\\dog-Ava-project_BACK.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\g.silva.malheiro\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
