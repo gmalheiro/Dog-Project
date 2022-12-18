@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\dog-Ava-project_BACK.props" />
+</Project>

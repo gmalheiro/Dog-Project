@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\dog-Ava-project_BACK.props" />
+</Project>

@@ -7,5 +7,20 @@ namespace dog_Ava_project_BACK.Controllers
     [ApiController]
     public class ClassController : ControllerBase
     {
-    }
+
+        [HttpGet]
+        public void ListAll()
+        {
+
+        }
+
+        [HttpPost]
+        public int Register()
+        {
+            return 0;
+        }
+
+
+
+    }   
 }
