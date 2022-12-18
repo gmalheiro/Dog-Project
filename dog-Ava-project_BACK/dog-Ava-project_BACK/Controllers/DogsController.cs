@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace dog_Ava_project_BACK.Controllers
 {
@@ -17,13 +19,29 @@ namespace dog_Ava_project_BACK.Controllers
 
         [HttpGet]
         [Route("/ListAll")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entity.DogEntity))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Entity.DogEntity))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Entity.DogEntity>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListAll()
         {
             try
             {
-                return Ok(new Entity.DogEntity());
+                string strConnection = _configuration.GetConnectionString("Sql");
+
+                SqlConnection connection = new SqlConnection();
+                connection.Open();
+
+                StringBuilder strComando = new StringBuilder();
+                strComando.AppendLine("SELECT [Id]");
+                strComando.AppendLine("      ,[DogName]");
+                strComando.AppendLine("      ,[Breed]");
+                strComando.AppendLine("      ,[BirthYear]");
+                strComando.AppendLine("      ,[Pedgiree]");
+                strComando.AppendLine("      ,[Enrollment]");
+                strComando.AppendLine("      ,FROM [dbo].[Dogs]");
+                
+                SqlCommand cmd = new SqlCommand(strComando.ToString());
+
+                return Ok(new List<Entity.DogEntity>());
             }
             catch (Exception)
             {
