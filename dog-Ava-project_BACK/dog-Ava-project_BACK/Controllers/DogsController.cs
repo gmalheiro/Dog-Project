@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace dog_Ava_project_BACK.Controllers
 
         public DogsController(IConfiguration _configuration)
         {
-            _configuration = _configuration;
+            this._configuration = _configuration;
         }
 
         [HttpGet]
@@ -30,22 +31,44 @@ namespace dog_Ava_project_BACK.Controllers
                 SqlConnection connection = new SqlConnection();
                 connection.Open();
 
-                StringBuilder strComando = new StringBuilder();
-                strComando.AppendLine("SELECT [Id]");
-                strComando.AppendLine("      ,[DogName]");
-                strComando.AppendLine("      ,[Breed]");
-                strComando.AppendLine("      ,[BirthYear]");
-                strComando.AppendLine("      ,[Pedgiree]");
-                strComando.AppendLine("      ,[Enrollment]");
-                strComando.AppendLine("      ,FROM [dbo].[Dogs]");
+                StringBuilder strCommand = new StringBuilder();
+                strCommand.AppendLine("SELECT [Id]");
+                strCommand.AppendLine("      ,[DogName]");
+                strCommand.AppendLine("      ,[Breed]");
+                strCommand.AppendLine("      ,[BirthYear]");
+                strCommand.AppendLine("      ,[Pedgiree]");
+                strCommand.AppendLine("      ,[Enrollment]");
+                strCommand.AppendLine("      ,FROM [dbo].[Dogs]");
                 
-                SqlCommand cmd = new SqlCommand(strComando.ToString());
+                SqlCommand cmd = new SqlCommand(strCommand.ToString(), connection);
 
-                return Ok(new List<Entity.DogEntity>());
+                SqlDataReader dbReader = cmd.ExecuteReader();
+
+                List<Entity.DogEntity> dogs = new List<Entity.DogEntity>();
+
+                while (dbReader.Read())
+                {
+                    dogs.Add(new Entity.DogEntity()
+                    {
+                        Id = Convert.ToInt32(dbReader["Id"]??"00"),
+                        DogName = dbReader.GetString("DogName"),
+                        Breed = dbReader["Breed"] != DBNull.Value
+                        ? dbReader.GetString("Breed")
+                        : string.Empty,
+                        BirthYear = Convert.ToDateTime(
+                            dbReader["BirthYear"] == DBNull.Value 
+                            ? DateTime.MinValue
+                            : dbReader["BirthYear"]),
+                        Pedigree = dbReader.GetString("Pedigree"),
+                        Enrollment = dbReader.GetString("Enrollment")
+                    });
+                }
+
+                return Ok(dogs);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
