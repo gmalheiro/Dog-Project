@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SqlClient; 
 using System.Text;
 
 namespace dog_Ava_project_BACK.Controllers
@@ -26,9 +26,9 @@ namespace dog_Ava_project_BACK.Controllers
         {
             try
             {
-                string strConnection = _configuration.GetConnectionString("Sql");
+                string strConnection = _configuration.GetConnectionString("SQL");
 
-                SqlConnection connection = new SqlConnection();
+                SqlConnection connection = new SqlConnection(strConnection);
                 connection.Open();
 
                 StringBuilder strCommand = new StringBuilder();
@@ -36,9 +36,9 @@ namespace dog_Ava_project_BACK.Controllers
                 strCommand.AppendLine("      ,[DogName]");
                 strCommand.AppendLine("      ,[Breed]");
                 strCommand.AppendLine("      ,[BirthYear]");
-                strCommand.AppendLine("      ,[Pedgiree]");
+                strCommand.AppendLine("      ,[Pedigree]");
                 strCommand.AppendLine("      ,[Enrollment]");
-                strCommand.AppendLine("      ,FROM [dbo].[Dogs]");
+                strCommand.AppendLine("      FROM [dbo].[Dogs]");
                 
                 SqlCommand cmd = new SqlCommand(strCommand.ToString(), connection);
 
