@@ -115,18 +115,24 @@ namespace dog_Ava_project_BACK.Controllers
         }
 
         [HttpGet]
-        [Route("/ListById/{id}")]
+        [Route("/ListById/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entity.DogEntity))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ListById(int id)
+        public IActionResult ListById(int Id)
         {
             try
             {
-                return Ok(new Entity.DogEntity());
+                SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SQL"));
+                Entity.DogEntity dog = 
+                    connection.Query<Entity.DogEntity>(
+                    "Select [DogName],[Breed],[Pedigree],[Enrollment] from Dogs where Id = @Id",
+                     new Entity.DogEntity() { Id = Id } 
+                    ).FirstOrDefault();
+                return Ok(dog);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -134,30 +140,83 @@ namespace dog_Ava_project_BACK.Controllers
         [Route("/Register")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entity.DogEntity))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public int Register(Entity.DogEntity dog)
+        public IActionResult Register(Entity.DogEntity dog)
         {
-            return 0;
+            try
+            {
+                SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SQL"));
+
+                if (dog.BirthYear == DateTime.MinValue)
+                    dog.BirthYear = null;
+
+                int affectedRows = connection.Execute(
+                    "INSERT INTO [dbo].[Dogs]"+
+                    "([DogName],[Breed],[BirthYear],[Pedigree],[Enrollment])"+
+                    "VALUES(@DogName,@Breed,@BirthYear,@Pedigree,@Enrollment)",dog);
+                
+                return Ok(affectedRows);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("/Delete")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public void Delete(Entity.DogEntity dog)
+        public IActionResult Delete(Entity.DogEntity dog)
         {
+            try
+            {
+                SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SQL"));
 
+                if (dog.BirthYear == DateTime.MinValue)
+                    dog.BirthYear = null;
+
+                int affectedRows = connection.Execute(
+                    "DELETE FROM [dbo].[Dogs] WHERE Id = @Id ", dog);
+
+                return Ok(affectedRows);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch]
         [Route("/Update")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public int Update(Entity.DogEntity dog)
+        public IActionResult Update(Entity.DogEntity dog)
         {
-            return 0;
+            try
+            {
+                SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SQL"));
+
+                if (dog.BirthYear == DateTime.MinValue)
+                    dog.BirthYear = null;
+
+                int affectedRows = connection.Execute(
+                    "UPDATE [dbo].[Dogs]" +
+                    "SET [DogName] = @DogName" +
+                        ",[Breed] = @Breed" +
+                        ",[BirthYear] = @BirthYear" +
+                        ",[Pedigree] = @Pedigree" +
+                        ",[Enrollment] = @Enrollment" +
+                    " WHERE Id = @Id", dog);
+
+                return Ok(affectedRows);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        
-        
+
+
 
     }
 }
