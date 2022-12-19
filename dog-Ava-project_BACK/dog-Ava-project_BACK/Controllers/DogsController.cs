@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient; 
@@ -24,13 +25,63 @@ namespace dog_Ava_project_BACK.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult ListAll()
         {
+            List<Entity.DogEntity> dogs = new List<Entity.DogEntity>();
+            
             try
             {
                 string strConnection = _configuration.GetConnectionString("SQL");
 
-                SqlConnection connection = new SqlConnection(strConnection);
-                connection.Open();
+                using (SqlConnection connection = new SqlConnection(strConnection))
+                {
+                    connection.Open();
 
+                    StringBuilder strCommand = new StringBuilder();
+                    strCommand.AppendLine("SELECT [Id]");
+                    strCommand.AppendLine("      ,[DogName]");
+                    strCommand.AppendLine("      ,[Breed]");
+                    strCommand.AppendLine("      ,[BirthYear]");
+                    strCommand.AppendLine("      ,[Pedigree]");
+                    strCommand.AppendLine("      ,[Enrollment]");
+                    strCommand.AppendLine("      FROM [dbo].[Dogs]");
+
+                    using (SqlCommand cmd = new SqlCommand(strCommand.ToString(), connection))
+                    {
+                        SqlDataReader dbReader = cmd.ExecuteReader();
+
+                        while (dbReader.Read())
+                        {
+                            dogs.Add(new Entity.DogEntity()
+                            {
+                                Id = Convert.ToInt32(dbReader["Id"] ?? "00"),
+                                DogName = NullTreatment(dbReader["DogName"]),
+                                Breed = NullTreatment(dbReader["Breed"]),
+                                BirthYear = Convert.ToDateTime(
+                                    dbReader["BirthYear"] == DBNull.Value
+                                    ? DateTime.MinValue
+                                    : dbReader["BirthYear"]),
+                                Pedigree = NullTreatment(dbReader["Pedigree"]),
+                                Enrollment = NullTreatment(dbReader["Enrollment"])
+                            });
+                        }
+                    }
+                }
+                
+                return Ok(dogs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("/ListAllDapper")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Entity.DogEntity>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ListAllDapper()
+        {
+            try
+            {
                 StringBuilder strCommand = new StringBuilder();
                 strCommand.AppendLine("SELECT [Id]");
                 strCommand.AppendLine("      ,[DogName]");
@@ -40,35 +91,26 @@ namespace dog_Ava_project_BACK.Controllers
                 strCommand.AppendLine("      ,[Enrollment]");
                 strCommand.AppendLine("      FROM [dbo].[Dogs]");
                 
-                SqlCommand cmd = new SqlCommand(strCommand.ToString(), connection);
-
-                SqlDataReader dbReader = cmd.ExecuteReader();
-
-                List<Entity.DogEntity> dogs = new List<Entity.DogEntity>();
-
-                while (dbReader.Read())
-                {
-                    dogs.Add(new Entity.DogEntity()
-                    {
-                        Id = Convert.ToInt32(dbReader["Id"]??"00"),
-                        DogName = dbReader.GetString("DogName"),
-                        Breed = dbReader["Breed"] != DBNull.Value
-                        ? dbReader.GetString("Breed")
-                        : string.Empty,
-                        BirthYear = Convert.ToDateTime(
-                            dbReader["BirthYear"] == DBNull.Value 
-                            ? DateTime.MinValue
-                            : dbReader["BirthYear"]),
-                        Pedigree = dbReader.GetString("Pedigree"),
-                        Enrollment = dbReader.GetString("Enrollment")
-                    });
-                }
-
+                SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("SQL"));
+                List<Entity.DogEntity> dogs = connection.Query<Entity.DogEntity>(strCommand.ToString()).ToList(); 
+                
                 return Ok(dogs);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        private string NullTreatment(object valor)
+        {
+            if (valor == DBNull.Value)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return Convert.ToString(valor);
             }
         }
 
