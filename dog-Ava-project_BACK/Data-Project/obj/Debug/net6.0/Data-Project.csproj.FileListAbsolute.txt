@@ -1,0 +1,14 @@
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\bin\Debug\net6.0\Data-Project.deps.json
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\bin\Debug\net6.0\Data-Project.runtimeconfig.json
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\bin\Debug\net6.0\Data-Project.dll
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\bin\Debug\net6.0\Data-Project.pdb
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.csproj.AssemblyReference.cache
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.AssemblyInfoInputs.cache
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.AssemblyInfo.cs
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.csproj.CoreCompileInputs.cache
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.dll
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\refint\Data-Project.dll
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.pdb
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\Data-Project.genruntimeconfig.cache
+C:\Users\g.silva.malheiro\Documents\Programming\Projects\dog-ava-project\dog-Ava-project_BACK\Data-Project\obj\Debug\net6.0\ref\Data-Project.dll

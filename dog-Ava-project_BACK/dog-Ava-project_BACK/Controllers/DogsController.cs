@@ -1,9 +1,9 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using System.Data.SqlClient; 
 using System.Text;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace dog_Ava_project_BACK.Controllers
 {
@@ -11,7 +11,6 @@ namespace dog_Ava_project_BACK.Controllers
     [ApiController]
     public class DogsController : ControllerBase
     {
-
         private readonly IConfiguration _configuration;
 
         public DogsController(IConfiguration _configuration)
